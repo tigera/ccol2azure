@@ -1,0 +1,33 @@
+# Copyright (c) 2020 Tigera, Inc. All rights reserved.
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+
+package_update: true
+write_files:
+- encoding: b64
+  content: IyEvYmluL2Jhc2gKQVJDSD1gdW5hbWUgLW1gCmlmIFtbICRBUkNIID09ICJ4ODZfNjQiIF1dCnRoZW4KL3Vzci9iaW4vY3VybCAtbyAvdXNyL2Jpbi9rdWJlY3RsIC1MIGh0dHBzOi8vc3RvcmFnZS5nb29nbGVhcGlzLmNvbS9rdWJlcm5ldGVzLXJlbGVhc2UvcmVsZWFzZS92MS4xOS4yL2Jpbi9saW51eC9hbWQ2NC9rdWJlY3RsCi91c3IvYmluL2NobW9kICt4IC91c3IvYmluL2t1YmVjdGwKL3Vzci9iaW4vY3VybCAtbyAvdXNyL2Jpbi9jbHVzdGVyY3RsICAtTCBodHRwczovL2dpdGh1Yi5jb20va3ViZXJuZXRlcy1zaWdzL2NsdXN0ZXItYXBpL3JlbGVhc2VzL2Rvd25sb2FkL3YxLjEuMy9jbHVzdGVyY3RsLWxpbnV4LWFtZDY0Ci91c3IvYmluL2NobW9kICt4IC91c3IvYmluL2NsdXN0ZXJjdGwKL3Vzci9iaW4vY3VybCAtTG8gL3VzL2Jpbi9raW5kIGh0dHBzOi8va2luZC5zaWdzLms4cy5pby9kbC92MC4xMi4wL2tpbmQtbGludXgtYW1kNjQKL3Vzci9iaW4vY2htb2QgK3ggL3VzL2Jpbi9raW5kIAovdXNyL2Jpbi9jdXJsIC1zTCBodHRwczovL2FrYS5tcy9JbnN0YWxsQXp1cmVDTElEZWIgfCBiYXNoCmVsc2UKL3Vzci9iaW4vY3VybCAtbyAvdXNyL2Jpbi9rdWJlY3RsIC1MIGh0dHBzOi8vc3RvcmFnZS5nb29nbGVhcGlzLmNvbS9rdWJlcm5ldGVzLXJlbGVhc2UvcmVsZWFzZS92MS4xOS4yL2Jpbi9saW51eC9hcm02NC9rdWJlY3RsCi91c3IvYmluL2NobW9kICt4IC91c3IvYmluL2t1YmVjdGwKL3Vzci9iaW4vY3VybCAtTG8gL3Vzci9iaW4vY2x1c3RlcmN0bCBodHRwczovL2dpdGh1Yi5jb20va3ViZXJuZXRlcy1zaWdzL2NsdXN0ZXItYXBpL3JlbGVhc2VzL2Rvd25sb2FkL3YxLjEuMy9jbHVzdGVyY3RsLWxpbnV4LWFybTY0Ci91c3IvYmluL2NobW9kICt4IC91c3IvYmluL2NsdXN0ZXJjdGwKL3Vzci9iaW4vY3VybCAtTG8gL3VzL2Jpbi9raW5kIGh0dHBzOi8va2luZC5zaWdzLms4cy5pby9kbC92MC4xMi4wL2tpbmQtbGludXgtYXJtNjQKL3Vzci9iaW4vY2htb2QgK3ggL3VzL2Jpbi9raW5kIAovdXNyL2Jpbi9jdXJsIC1zTCBodHRwczovL2FrYS5tcy9JbnN0YWxsQXp1cmVDTElEZWIgfCBiYXNoCmZp
+  owner: root:root
+  path: /root/bin_downloader.sh
+  permissions: '0644'
+runcmd:
+  - [ /usr/bin/cloud-init, single, --name, cc_write_files, --frequency, always ]
+  - [ /usr/bin/chmod, +x, /root/bin_downloader.sh ]
+  - [ /usr/bin/sh, /root/bin_downloader.sh ]
+  - [ /usr/bin/curl, -fsSL, https://get.docker.com, -o, get-docker.sh ]
+  - [ /usr/bin/sh, get-docker.sh ]
+  - [ /usr/sbin/usermod, -aG, docker, ubuntu ]
+
+power_state:
+  mode: reboot
