@@ -1,4 +1,3 @@
-kubectl apply -f - <<EOF
 apiVersion: projectcalico.org/v3
 kind: NetworkPolicy
 metadata:
@@ -38,4 +37,3 @@ spec:
     destination:
       selector: app == "database"
       namespaceSelector: projectcalico.org/name == "yaobank-database"
-EOF
